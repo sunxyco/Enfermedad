@@ -7,6 +7,9 @@ class Simulador:
     def set_comunidad(self, comunidad):
         self.__comunidad = comunidad
 
+    def get_comunidad(self ):
+        return self.__comunidad
+
     def run(self, pasos):
         #correr la simulacion
         print("de momento pinta bien")
