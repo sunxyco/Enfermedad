@@ -49,15 +49,44 @@ class Comunidad:
         id_familia = 0
         media = 3.1
         desviacion_estandar = 1.2
+        id_persona = 1
 
         #self.ciudadanos.append(ciudadano)
-        for x in range(num_ciudadanos):
-            print(f"{x + 1} agregar ciudadano")
+        while id_persona != self.num_ciudadanos + 1:
+        #for x in range(num_ciudadanos):
+            print(f"{id_persona} agregar ciudadano")
 
             cantidad_integrantes = self.numero_integrantes(media, desviacion_estandar)
             for persona in range(cantidad_integrantes):
                 #se crea la persona /haciendo que la clase se haga referencia hacia si misma (mind blowing cuando cache esto looooooool)
-                persona = Ciudadano(self, x + 1, f"nombre_apellido{x + 1}", id_familia)
+                persona = Ciudadano(self, id_persona, f"nombre_apellido{id_persona}", id_familia)
                 arreglo_comunidad.append(persona)
-            id_familia += 1 
+                id_persona += 1
+                if id_persona == self.num_ciudadanos + 1:
+                    break
+            id_familia += 1
+
+        #agregar infectados a la comunidad
+        arreglo_comunidad_infectada = self.agregar_infectados_iniciales(num_ciudadanos, self.num_infectados, arreglo_comunidad)
+
+        return arreglo_comunidad_infectada
+
+    def agregar_infectados_iniciales(self, num_ciudadanos, num_infectados, arreglo_comunidad):
+        #ranodom sample genera una lista de numeros aleatorios
+        numeros_unicos = random.sample(range(num_ciudadanos), num_infectados)
+        numeros_unicos.sort()
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", numeros_unicos)
+
+        for persona in arreglo_comunidad:
+            if persona._id in numeros_unicos:
+                print("EUREka~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                print(persona._id)
+                print(persona.nombre_apellido)
+                print(persona.estado)
+                persona.enfermarse()
+                print(persona.estado)
+
+
+
+
         return arreglo_comunidad

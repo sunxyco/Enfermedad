@@ -26,6 +26,7 @@ for persona in arreglo_ciudadanos:
     print("id        ~ ", persona._id)
     print("nombre    ~ ", persona.nombre_apellido)
     print("familia   ~ ", persona.familia)
+    print("estado    ~ ", persona.estado)
     print("")
 
 #numpy      -> resolver ecuaciones diferenciales
