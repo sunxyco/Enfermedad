@@ -1,3 +1,5 @@
+from enfermedad import Enfermedad
+
 class Ciudadano:
 
     def __init__(self, comunidad, _id, nombre_apellido, familia):
@@ -18,9 +20,12 @@ class Ciudadano:
 
         #2 - conctado (si se ven fisicamente) -> contacto estrecho (entre familia (importanet el id de familia))
         #                                     -> no contacto estrecho (conexion aleatoria entre cada objeto)
+        self.inmunidad = False
 
-    def enfermarse(self):
+    def enfermarse(self, enfermedad_clase):
         self.estado = True
+        self.enfermedad = enfermedad_clase
 
     def recuperarse(self):
         self.estado = False
+        self.estado = True

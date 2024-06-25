@@ -3,13 +3,19 @@ from comunidad import Comunidad
 from simulador import Simulador
 
 covid = Enfermedad(infeccion_probable=0.3,
-                    promedio_pasos=10)
+                    #dias que la enfermedad va a existir antes que se cure
+                    promedio_pasos=10,
+                    nombre="Covis")
+
 talca = Comunidad(num_ciudadanos=200,
+                    #promedios de numero de contactos - puede que haya un numero x de contactos
+                    #puede que los contactos sean con una persona infectada o con una persona que esta sana(??????)
                     promedio_conexion_fisica=8,
                     enfermedad = covid,
-                    num_infectados=10,
+                    num_infectados=100,
                     probabilidad_conexion_fisica=0.8,
                     nombre = "Talca")
+
 sim = Simulador()
 sim.set_comunidad(talca)
 sim.run(45)
@@ -27,7 +33,11 @@ for persona in arreglo_ciudadanos:
     print("nombre    ~ ", persona.nombre_apellido)
     print("familia   ~ ", persona.familia)
     print("estado    ~ ", persona.estado)
-    print("")
+    try:
+        print("enfermedad~ ", persona.enfermedad.nombre)
+    except AttributeError:
+        print("La persona no tiene una enfermedad asignada.")
+    print("          ")
 
 #numpy      -> resolver ecuaciones diferenciales
 #matplotlib -> generar grafico

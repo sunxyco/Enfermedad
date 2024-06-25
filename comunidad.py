@@ -83,7 +83,7 @@ class Comunidad:
                 print(persona._id)
                 print(persona.nombre_apellido)
                 print(persona.estado)
-                persona.enfermarse()
+                persona.enfermarse(self.enfermedad)
                 print(persona.estado)
 
 
