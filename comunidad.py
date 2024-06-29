@@ -1,5 +1,7 @@
 from ciudadano import Ciudadano
 import random
+import numpy as np
+
 
 class Comunidad:
     def __init__(self, num_ciudadanos,
@@ -67,12 +69,43 @@ class Comunidad:
             id_familia += 1
 
         #agregar infectados a la comunidad
-        arreglo_comunidad_infectada = self.agregar_infectados_iniciales(num_ciudadanos, self.num_infectados, arreglo_comunidad)
+
+        arreglo_comunidad_con_conexiones = self.generar_conexiones_interpersonas(self.promedio_conexion_fisica, arreglo_comunidad)
+
+        arreglo_comunidad_infectada = self.agregar_infectados_iniciales(num_ciudadanos, self.num_infectados, arreglo_comunidad_con_conexiones)
 
         return arreglo_comunidad_infectada
 
+
+
+    def generar_conexiones_interpersonas(self, promedio_conexion_fisica, arreglo_comunidad):
+        #personas
+        #lista_comunidad = arreglo_comunidad
+
+        #tamaño del subconjunto
+        #promedio de conexiones
+        tamano_subconjunto = promedio_conexion_fisica
+
+        #a cada persona se le va a asignar un arreglo ~referencia a otros objetos de la misma comunidad, van a ser sus amikos~
+        #(me gustaria mostrar las conexiones entre objetos en un grafo)
+        for persona in arreglo_comunidad:
+            #seleccionar subconjntos aleatorio sin reemplazo
+            subconjunto_aleatorio = np.random.choice(arreglo_comunidad, size=tamano_subconjunto)
+
+            print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
+
+            persona.conexiones = subconjunto_aleatorio
+
+            print(f"~ conexiones del elemento ~~ {persona.conexiones}")
+
+            """for elemento in subconjunto_aleatorio:
+                print(f"~~~~~~~~ {elemento.nombre_apellido}")"""
+
+        return arreglo_comunidad
+
+
     def agregar_infectados_iniciales(self, num_ciudadanos, num_infectados, arreglo_comunidad):
-        #ranodom sample genera una lista de numeros aleatorios
+        #ranodom sample genera una lista de numeros aleatorios que no se repiten
         numeros_unicos = random.sample(range(num_ciudadanos), num_infectados)
         numeros_unicos.sort()
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", numeros_unicos)
@@ -84,7 +117,7 @@ class Comunidad:
                 print(persona.nombre_apellido)
                 print(persona.estado)
                 persona.enfermarse(self.enfermedad)
-                print(persona.estado)
+                #print(persona.estado)
 
 
 

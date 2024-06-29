@@ -10,7 +10,7 @@ covid = Enfermedad(infeccion_probable=0.3,
 talca = Comunidad(num_ciudadanos=200,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
                     #puede que los contactos sean con una persona infectada o con una persona que esta sana(??????)
-                    promedio_conexion_fisica=8,
+                    promedio_conexion_fisica=9,
                     enfermedad = covid,
                     num_infectados=100,
                     probabilidad_conexion_fisica=0.8,
@@ -33,6 +33,11 @@ for persona in arreglo_ciudadanos:
     print("nombre    ~ ", persona.nombre_apellido)
     print("familia   ~ ", persona.familia)
     print("estado    ~ ", persona.estado)
+    print("Conexiones~ ")
+
+    for amigo in persona.conexiones:
+        print(amigo.nombre_apellido)
+
     try:
         print("enfermedad~ ", persona.enfermedad.nombre)
     except AttributeError:

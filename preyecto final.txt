@@ -79,3 +79,23 @@ plt.title('Gráfico de línea')
 plt.grid(True)
 plt.show()
 ~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+apuntes 25-06-2024
+
+ -encapsulamiento -> hacer los set y get
+ -infeccion probable ~ [contacto aleatorio / contacto estrecho (interfamili)]
+
+ pasos a seguir de lo que me falta
+  1. hacer los get~set
+  2. empezar a hacer el simulador y hacer que la gente se empiece a infectar
+  3. hacer que las personas tengas un nombre aleatorio
+
+ -random.random -> genera un numero entre el rango (0.0 , 1.0), se puede usar para comparar las probabilidades
+
+ def probabilidad_ejemplo(texto, probabilidad):
+ 	if random.random() < probabilidad
+ 		print(text)
+
+#ejemplo
+probabilidad_ejemplo("hola mundo", 0.5) #imprimira le texto con un 50%
