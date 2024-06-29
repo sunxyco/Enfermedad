@@ -1,6 +1,7 @@
 from ciudadano import Ciudadano
 import random
 import numpy as np
+import generador_nombres
 
 
 class Comunidad:
@@ -54,6 +55,10 @@ class Comunidad:
         id_persona = 1
 
         #self.ciudadanos.append(ciudadano)
+
+        #se generan los nombres de las personas
+        generador_nombres.nombres_genesis(num_ciudadanos)
+
         while id_persona != self.num_ciudadanos + 1:
         #for x in range(num_ciudadanos):
             print(f"{id_persona} agregar ciudadano")
