@@ -1,11 +1,13 @@
 from enfermedad import Enfermedad
 from comunidad import Comunidad
 from simulador import Simulador
+import pandas as pd
 
 covid = Enfermedad(infeccion_probable=0.3,
                     #dias que la enfermedad va a existir antes que se cure
                     promedio_pasos=10,
-                    nombre="Covis")
+                    nombre="Covis",
+                    mortalidad=0.1)
 
 talca = Comunidad(num_ciudadanos=200,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
@@ -27,6 +29,7 @@ arreglo_ciudadanos = sim.get_comunidad().ciudadanos
 
 #consultar clase persona, ahora mismo los objetos ciudadano estan contenidos en un array que es
 #un atributo de comunidad (pensando en relacionar las dos clases de otra menera mmmmmmmmmmmmm)
+
 for persona in arreglo_ciudadanos:
     print("comunidad ~ ", persona.comunidad.nombre)
     print("id        ~ ", persona._id)

@@ -2,6 +2,7 @@ from ciudadano import Ciudadano
 import random
 import numpy as np
 import generador_nombres
+import pandas as pd
 
 
 class Comunidad:
@@ -33,40 +34,37 @@ class Comunidad:
     def crear_ciudadanos(self, num_ciudadanos):
         #arreglo que alergara los obajeto tipo ciudadano
         arreglo_comunidad = []
-        """
-        id_familia = 0
-
-        media = 3.1
-        desviacion_estandar = 1.2
-
-        for i in range(num_personas):
-            cantidad_integrantes = numero_integrantes(media, desviacion_estandar)
-
-            for persona in range(cantidad_integrantes):
-                persona = Persona(id_persona=i+1, id_familia=id_familia)
-                personas.append(persona)
-
-            id_familia += 1 
-        return personas"""
 
         id_familia = 0
         media = 3.1
         desviacion_estandar = 1.2
         id_persona = 1
 
-        #self.ciudadanos.append(ciudadano)
-
         #se generan los nombres de las personas
         generador_nombres.nombres_genesis(num_ciudadanos)
 
+        #se lee el archivo que se genero recien y se crean los nombres
+        df = pd.read_csv("./nombres_apellidos.csv")
+        print("creacion de nombres")
+        nombres_completos = df["nombre"] + " " + df["apellido"]
+
+        """
+        x = 0
+        for nombre in nombres_completos:
+            print(f"~~~~ {x} ~~~ {nombre}")
+            x = x + 1"""
+
         while id_persona != self.num_ciudadanos + 1:
+
         #for x in range(num_ciudadanos):
             print(f"{id_persona} agregar ciudadano")
 
             cantidad_integrantes = self.numero_integrantes(media, desviacion_estandar)
             for persona in range(cantidad_integrantes):
                 #se crea la persona /haciendo que la clase se haga referencia hacia si misma (mind blowing cuando cache esto looooooool)
-                persona = Ciudadano(self, id_persona, f"nombre_apellido{id_persona}", id_familia)
+                
+                #se ve acorde a el numero de id-1 la posicion del nombre de la persona
+                persona = Ciudadano(self, id_persona, nombres_completos[id_persona - 1], id_familia)
                 arreglo_comunidad.append(persona)
                 id_persona += 1
                 if id_persona == self.num_ciudadanos + 1:
@@ -97,11 +95,11 @@ class Comunidad:
             #seleccionar subconjntos aleatorio sin reemplazo
             subconjunto_aleatorio = np.random.choice(arreglo_comunidad, size=tamano_subconjunto)
 
-            print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
+            #print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
 
             persona.conexiones = subconjunto_aleatorio
 
-            print(f"~ conexiones del elemento ~~ {persona.conexiones}")
+            #print(f"~ conexiones del elemento ~~ {persona.conexiones}")
 
             """for elemento in subconjunto_aleatorio:
                 print(f"~~~~~~~~ {elemento.nombre_apellido}")"""
