@@ -34,9 +34,11 @@ class Ciudadano:
         #conexiones que tiene la persona, se puede considerar amikos
         self.conexiones = []
 
+    #para enfermar a los infectados inciales de la comunidad
     def enfermarse(self, enfermedad_clase):
         self.estado = True
         self.enfermedad = enfermedad_clase
+        print("~~~ enfermedad ser como ~~ {enfermedad_clase.infeccion_probable_aleatorio} {enfermedad_clase.enfeccion_probable_familiar}")
 		#eliminar la realcion cuando se recupere
 		
     def recuperarse(self):

@@ -3,7 +3,8 @@ from comunidad import Comunidad
 from simulador import Simulador
 import pandas as pd
 
-covid = Enfermedad(infeccion_probable=0.3,
+covid = Enfermedad(infeccion_probable_aleatorio=0.3,
+                    infeccion_probable_familiar=0.4,
                     #dias que la enfermedad va a existir antes que se cure
                     promedio_pasos=10,
                     nombre="Covis",
@@ -12,7 +13,7 @@ covid = Enfermedad(infeccion_probable=0.3,
 talca = Comunidad(num_ciudadanos=5,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
                     #puede que los contactos sean con una persona infectada o con una persona que esta sana(??????)
-                    promedio_conexion_fisica=0,
+                    promedio_conexion_fisica=2,
                     enfermedad = covid,
                     num_infectados=1,
                     probabilidad_conexion_fisica=0.8,
@@ -20,7 +21,7 @@ talca = Comunidad(num_ciudadanos=5,
 
 sim = Simulador()
 sim.set_comunidad(talca)
-sim.run(45)
+sim.run(2)
 
 #print(sim.get_comunidad().ciudadanos)
 

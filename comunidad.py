@@ -92,17 +92,29 @@ class Comunidad:
         #a cada persona se le va a asignar un arreglo ~referencia a otros objetos de la misma comunidad, van a ser sus amikos~
         #(me gustaria mostrar las conexiones entre objetos en un grafo)
         for persona in arreglo_comunidad:
+
+            #se filtra la comunidad para quitarle la persona a la que se le estan haciendo las conexiones y las pesonas de su familia
+            counidad_filtrada = []
+
+            for persona_filtrar in arreglo_comunidad:
+                if persona._id != persona_filtrar._id and persona.familia != persona_filtrar.familia:
+                    counidad_filtrada.append(persona_filtrar)
+
+
             #seleccionar subconjntos aleatorio sin reemplazo
-            subconjunto_aleatorio = np.random.choice(arreglo_comunidad, size=tamano_subconjunto)
+            subconjunto_aleatorio = np.random.choice(counidad_filtrada, size=tamano_subconjunto, replace=False)
 
             #print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
 
             for elemetno in subconjunto_aleatorio:
                 persona.conexiones.append(elemetno)
 
+            #se agrega a la fuerza a las personas que tienen el mismo id de familia
             for persona_comparar in arreglo_comunidad:
                 if persona.familia == persona_comparar.familia and persona._id != persona_comparar._id:
-                    persona.conexiones.append(persona_comparar)
+                    if persona_comparar not in persona.conexiones:
+                        persona.conexiones.append(persona_comparar)
+
 
             #print(f"~ conexiones del elemento ~~ {persona.conexiones}")
 
