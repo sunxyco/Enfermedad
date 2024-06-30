@@ -9,7 +9,7 @@ covid = Enfermedad(infeccion_probable=0.3,
                     nombre="Covis",
                     mortalidad=0.1)
 
-talca = Comunidad(num_ciudadanos=200,
+talca = Comunidad(num_ciudadanos=5,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
                     #puede que los contactos sean con una persona infectada o con una persona que esta sana(??????)
                     promedio_conexion_fisica=0,
@@ -33,6 +33,8 @@ arreglo_ciudadanos = sim.get_comunidad().ciudadanos
 #prueba para ver si se puede cambiar el estado
 #arreglo_ciudadanos[69].conexiones[2].estado = True
 
+#fucnion para mostrar los ciudadanos de la comunidad
+"""
 for persona in arreglo_ciudadanos:
     print("comunidad ~ ", persona.comunidad.nombre)
     print("id        ~ ", persona._id)
@@ -51,6 +53,6 @@ for persona in arreglo_ciudadanos:
     except AttributeError:
         print("La persona no tiene una enfermedad asignada.")
     print("          ")
-
+"""
 #numpy      -> resolver ecuaciones diferenciales
 #matplotlib -> generar grafico
