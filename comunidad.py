@@ -63,7 +63,7 @@ class Comunidad:
             for persona in range(cantidad_integrantes):
                 #se crea la persona /haciendo que la clase se haga referencia hacia si misma (mind blowing cuando cache esto looooooool)
                 
-                #se ve acorde a el numero de id-1 la posicion del nombre de la persona
+                #se ve acorde a el numero de id-1 la posicion del nombre de la personacd 
                 persona = Ciudadano(self, id_persona, nombres_completos[id_persona - 1], id_familia)
                 arreglo_comunidad.append(persona)
                 id_persona += 1
@@ -97,7 +97,12 @@ class Comunidad:
 
             #print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
 
-            persona.conexiones = subconjunto_aleatorio
+            for elemetno in subconjunto_aleatorio:
+                persona.conexiones.append(elemetno)
+
+            for persona_comparar in arreglo_comunidad:
+                if persona.familia == persona_comparar.familia and persona._id != persona_comparar._id:
+                    persona.conexiones.append(persona_comparar)
 
             #print(f"~ conexiones del elemento ~~ {persona.conexiones}")
 
