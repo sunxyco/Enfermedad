@@ -3,6 +3,7 @@ import random
 import numpy as np
 import generador_nombres
 import pandas as pd
+import conexiones
 
 
 class Comunidad:
@@ -28,7 +29,8 @@ class Comunidad:
         #la cantidad de integrantes de la familia distribuJen normal con ciertos parametros qe hay q consultar mejor
         #random .gauss retorna un valor random pero en dustribucion normal
         #round redondea 3.7 -> 4 // 3.2 -> 3
-        return round(random.gauss(media, desviacion_estandar))
+        numero_de_integrantes_de_la_familia = conexiones.dist_normal(media, desviacion_estandar)
+        return numero_de_integrantes_de_la_familia
 
 
     def crear_ciudadanos(self, num_ciudadanos):
@@ -102,10 +104,12 @@ class Comunidad:
 
 
             #seleccionar subconjntos aleatorio sin reemplazo
-            subconjunto_aleatorio = np.random.choice(counidad_filtrada, size=tamano_subconjunto, replace=False)
+            if len(counidad_filtrada) > 0:
+                subconjunto_aleatorio = np.random.choice(counidad_filtrada, size=tamano_subconjunto, replace=False)
+            else:
+                subconjunto_aleatorio = []
 
             #print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
-
             for elemetno in subconjunto_aleatorio:
                 persona.conexiones.append(elemetno)
 
@@ -131,15 +135,12 @@ class Comunidad:
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", numeros_unicos)
 
         for persona in arreglo_comunidad:
-            if persona._id in numeros_unicos:
+            if persona._id - 1 in numeros_unicos:
                 print("EUREka~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 print(persona._id)
                 print(persona.nombre_apellido)
                 print(persona.estado)
                 persona.enfermarse(self.enfermedad)
                 #print(persona.estado)
-
-
-
 
         return arreglo_comunidad

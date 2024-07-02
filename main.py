@@ -13,7 +13,7 @@ covid = Enfermedad(infeccion_probable_aleatorio=0.3,
 talca = Comunidad(num_ciudadanos=5,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
                     #puede que los contactos sean con una persona infectada o con una persona que esta sana(??????)
-                    promedio_conexion_fisica=1,
+                    promedio_conexion_fisica=0,
                     enfermedad = covid,
                     num_infectados=1,
                     probabilidad_conexion_fisica=0.8,
