@@ -89,7 +89,7 @@ class Comunidad:
 
         #tamaño del subconjunto
         #promedio de conexiones
-        tamano_subconjunto = promedio_conexion_fisica
+        tamano_subconjunto = conexiones.dist_normal(promedio_conexion_fisica, 1)
 
         #a cada persona se le va a asignar un arreglo ~referencia a otros objetos de la misma comunidad, van a ser sus amikos~
         #(me gustaria mostrar las conexiones entre objetos en un grafo)
@@ -103,8 +103,11 @@ class Comunidad:
                     counidad_filtrada.append(persona_filtrar)
 
 
-            #seleccionar subconjntos aleatorio sin reemplazo
+            #seleccionar subconjntos aleatorio sin reemplazo para conexiones al azar
+            print(f"~~~~~~ {counidad_filtrada}")
             if len(counidad_filtrada) > 0:
+                while tamano_subconjunto > len(counidad_filtrada):
+                    tamano_subconjunto -= 1
                 subconjunto_aleatorio = np.random.choice(counidad_filtrada, size=tamano_subconjunto, replace=False)
             else:
                 subconjunto_aleatorio = []

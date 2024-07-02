@@ -1,4 +1,5 @@
 from enfermedad import Enfermedad
+import conexiones
 
 class Ciudadano:
 
@@ -21,7 +22,8 @@ class Ciudadano:
         #2 - conctado (si se ven fisicamente) -> contacto estrecho (entre familia (importanet el id de familia****))
         #                                     -> no contacto estrecho (conexion aleatoria entre cada objeto)
         self.inmunidad = False
-        
+        self.dias_enfermo = 0
+        self.dias_que_va_a_estar_enfermo = None
         """
         ~idea
         self.dias_enfermo = 0
@@ -38,8 +40,11 @@ class Ciudadano:
     def enfermarse(self, enfermedad_clase):
         self.estado = True
         self.enfermedad = enfermedad_clase
-        print("~~~ enfermedad ser como ~~ {enfermedad_clase.infeccion_probable_aleatorio} {enfermedad_clase.enfeccion_probable_familiar}")
+        print(f"~~~ enfermedad ser como ~~ E.C-{enfermedad_clase.infeccion_probable_aleatorio} -- E.F-{enfermedad_clase.infeccion_probable_familiar}")
 		#eliminar la realcion cuando se recupere
+
+        #los dias que la persona va a estar enferma dist. normal
+        self.dias_que_va_a_estar_enfermo = conexiones.dist_normal(enfermedad_clase.promedio_pasos, 1)
 		
     def recuperarse(self):
         self.estado = False

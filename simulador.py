@@ -1,5 +1,6 @@
 from comunidad import Comunidad
 import conexiones
+import random
 
 class Simulador:
     def __init__(self):
@@ -48,12 +49,17 @@ class Simulador:
             for persona_posible_de_contagio in arreglo_personas_contagianes:
                 self.contagiar_conexiones(persona_posible_de_contagio)
 
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nSe Terminó el dia \n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            presonas_enfermas = 0
+            for persona_shi in self.get_comunidad().ciudadanos:
+                if persona_shi.estado:
+                    presonas_enfermas = presonas_enfermas + 1
+            print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nSe Terminó el dia ~ personas enfermas: {presonas_enfermas} \n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-        print("\n\nDATOS FINALES DE LA SIMULACION\n")
-        for persona in self.get_comunidad().ciudadanos:
-            print(f"id_{persona._id} {persona.estado} {persona.nombre_apellido} {persona.familia} {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
 
+            print("\n\nDATOS FINAL DEL DIA\n")
+            for persona in self.get_comunidad().ciudadanos:
+                print(f"id_{persona._id} {persona.estado} {persona.nombre_apellido} {persona.familia} {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     def contagiar_conexiones(self, persona_contagiante):
         #se va a comparar persona cada una de las personas que tengan conexiones con la persona contagiante
@@ -69,13 +75,27 @@ class Simulador:
         
         for persona_suseptible in conexiones_temporal:
             print(f"la persona es un contacto {persona_suseptible._id} ~ {persona_suseptible.nombre_apellido}")
-            #si la persona ya esta enferma ya no se tomara en cuenta
-            if persona_suseptible.estado:
-                print(f"Ya esta enfermo ~~ {persona_suseptible.nombre_apellido}")
-            #si la persona no esta enferma esta se mandara a la funcion para enfermarse
+
+            #solo va a existir un contacto con la probabilidad de self.get_comunidad.probabilidad_conexion_fisica -> 0.8
+            if random.random() <= self.get_comunidad().probabilidad_conexion_fisica:
+                print("Si hubo contacto")
+
+                #en esta variable se aloja un bool que servira para la funcion de ahora
+                probabilidad_de_que_de_enfeme = conexiones.probabilidad(persona_contagiante, persona_suseptible)
+                
+                #si la persona ya esta enferma ya no se tomara en cuenta
+                if persona_suseptible.estado:
+                    print(f"Ya esta enfermo ~~ {persona_suseptible.nombre_apellido}")
+                #si la persona no esta enferma esta se mandara a la funcion para enfermarse
+                else:
+                    if probabilidad_de_que_de_enfeme:
+                        persona_suseptible.enfermarse(persona_contagiante.enfermedad)
+                        print(f"{persona_suseptible.nombre_apellido} ~~~ se ha enfermado")
+                        print(f"~ {persona_suseptible.estado} \n")
+                    else:
+                        print("No es a enfermado")
+
             else:
-                persona_suseptible.enfermarse(persona_contagiante.enfermedad)
-                print(f"{persona_suseptible.nombre_apellido} ~~~ se ha enfermado")
-                print(f"~ {persona_suseptible.estado} \n")
+                print("No hubo contacto entre las dos personas")
 
         #persona_contagiante.conexiones = conexiones_temporal
