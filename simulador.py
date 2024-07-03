@@ -24,6 +24,9 @@ class Simulador:
         adipd = [self.get_comunidad().num_infectados]
         #Almacenamiento De Datos De Inmunes Por Dia
         adnpo = [0]
+        #Almacenamiento De Datos De Sanos
+        numero_sanos_iniciales = self.get_comunidad().num_ciudadanos - self.get_comunidad().num_infectados
+        ads = [numero_sanos_iniciales]
 
         for iteracion in range(pasos):
             print(f"PASO ~~ {iteracion + 1} \n")
@@ -64,11 +67,15 @@ class Simulador:
 
             #se cuentan las personas enfermas al final del dia
             presonas_enfermas = 0
+            personas_sanas = 0
             for persona_shi in self.get_comunidad().ciudadanos:
                 if persona_shi.estado:
                     presonas_enfermas = presonas_enfermas + 1
+                else:
+                    personas_sanas = personas_sanas + 1
             print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nSe Terminó el dia ~ personas enfermas: {presonas_enfermas} \n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             adipd.append(presonas_enfermas)
+            ads.append(personas_sanas)
 
             print("\n\nDATOS FINAL DEL DIA\n")
             for persona in self.get_comunidad().ciudadanos:
@@ -85,6 +92,7 @@ class Simulador:
         #       (Eje X        , Eje Y)
         plt.plot(arreglo_eje_x, adipd)  
         plt.plot(arreglo_eje_x, adnpo)
+        plt.plot(arreglo_eje_x, ads)
 
         #nombres ejes x , y  
         plt.xlabel("x - Dias")   
