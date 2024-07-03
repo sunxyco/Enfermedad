@@ -1,6 +1,7 @@
 from comunidad import Comunidad
 import conexiones
 import random
+import matplotlib.pyplot as plt
 
 class Simulador:
     def __init__(self):
@@ -28,6 +29,7 @@ class Simulador:
             #se muestran las personas la inicio del dia
             for persona in self.get_comunidad().ciudadanos:
                 print(f"id_{persona._id} {persona.estado} {persona.nombre_apellido} {persona.familia} {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
+            print("\n")
 
             for persona in self.get_comunidad().ciudadanos:
                 if persona.estado:
@@ -66,6 +68,23 @@ class Simulador:
                     print(f"id_{persona._id} {persona.estado} d{persona.dias_enfermo}-{persona.dias_que_va_a_estar_enfermo} f{persona.familia} {persona.nombre_apellido} ~ {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print(f"enfermos por dia ~ {adipd}")
+
+        longitud_x = len(adipd)
+        arreglo_eje_x = list(range(1, longitud_x + 1))
+
+        #       (Eje X        , Eje Y)
+        plt.plot(arreglo_eje_x, adipd)  
+            
+        #nombres ejes x , y  
+        plt.xlabel("x - Dias")   
+        plt.ylabel("y - Enfermos")  
+            
+        #titulo grafico 
+        plt.title("Hello World")  
+        
+        #muestra el grafico            
+        plt.show()  
+
 
     def contagiar_conexiones(self, persona_contagiante):
         #se va a comparar persona cada una de las personas que tengan conexiones con la persona contagiante
