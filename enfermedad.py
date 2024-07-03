@@ -6,7 +6,7 @@ class Enfermedad:
         self.nombre = nombre
 
         #mortalidad para hacerlo mas interesante
-        self.mortalidad = mortalidad
+        #self.mortalidad = mortalidad
     """
 
     # Getters

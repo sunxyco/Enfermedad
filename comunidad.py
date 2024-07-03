@@ -59,7 +59,7 @@ class Comunidad:
         while id_persona != self.num_ciudadanos + 1:
 
         #for x in range(num_ciudadanos):
-            print(f"{id_persona} agregar ciudadano")
+            #print(f"{id_persona} agregar ciudadano")
 
             cantidad_integrantes = self.numero_integrantes(media, desviacion_estandar)
             for persona in range(cantidad_integrantes):
@@ -104,7 +104,7 @@ class Comunidad:
 
 
             #seleccionar subconjntos aleatorio sin reemplazo para conexiones al azar
-            print(f"~~~~~~ {counidad_filtrada}")
+            #print(f"~~~~~~ {counidad_filtrada}")
             if len(counidad_filtrada) > 0:
                 while tamano_subconjunto > len(counidad_filtrada):
                     tamano_subconjunto -= 1
@@ -135,14 +135,14 @@ class Comunidad:
         #ranodom sample genera una lista de numeros aleatorios que no se repiten
         numeros_unicos = random.sample(range(num_ciudadanos), num_infectados)
         numeros_unicos.sort()
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", numeros_unicos)
+        #print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", numeros_unicos)
 
         for persona in arreglo_comunidad:
             if persona._id - 1 in numeros_unicos:
-                print("EUREka~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print(persona._id)
-                print(persona.nombre_apellido)
-                print(persona.estado)
+                #print("EUREka~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                #print(persona._id)
+                #print(persona.nombre_apellido)
+                #print(persona.estado)
                 persona.enfermarse(self.enfermedad)
                 #print(persona.estado)
 

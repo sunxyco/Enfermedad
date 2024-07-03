@@ -43,9 +43,10 @@ class Ciudadano:
         print(f"~~~ enfermedad ser como ~~ E.C-{enfermedad_clase.infeccion_probable_aleatorio} -- E.F-{enfermedad_clase.infeccion_probable_familiar}")
 		#eliminar la realcion cuando se recupere
 
-        #los dias que la persona va a estar enferma dist. normal
+        #los dias que la persona va a estar enferma dist. normal - se define cuando se enferma
         self.dias_que_va_a_estar_enfermo = conexiones.dist_normal(enfermedad_clase.promedio_pasos, 1)
 		
     def recuperarse(self):
         self.estado = False
-		#self.enfermedad = None
+        self.enfermedad = None
+        self.inmunidad = True

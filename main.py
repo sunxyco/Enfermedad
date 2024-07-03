@@ -3,10 +3,10 @@ from comunidad import Comunidad
 from simulador import Simulador
 import pandas as pd
 
-covid = Enfermedad(infeccion_probable_aleatorio=0.1,
-                    infeccion_probable_familiar=0.9,
+covid = Enfermedad(infeccion_probable_aleatorio=0.2,
+                    infeccion_probable_familiar=0.7,
                     #dias que la enfermedad va a existir antes que se cure
-                    promedio_pasos=10,
+                    promedio_pasos=3,
                     nombre="Covis",
                     mortalidad=0.1)
 
@@ -21,7 +21,7 @@ talca = Comunidad(num_ciudadanos=5,
 
 sim = Simulador()
 sim.set_comunidad(talca)
-sim.run(2)
+sim.run(5)
 
 
 
