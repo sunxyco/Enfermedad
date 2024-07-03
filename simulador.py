@@ -20,8 +20,10 @@ class Simulador:
 
         print("SIMULADOR ~~~~ ", self.get_comunidad().nombre)
 
-        #Almacenamiento De Datos DE Infectados Por Dia
+        #Almacenamiento De Datos De Infectados Por Dia
         adipd = [self.get_comunidad().num_infectados]
+        #Almacenamiento De Datos De Inmunes Por Dia
+        adnpo = [0]
 
         for iteracion in range(pasos):
             print(f"PASO ~~ {iteracion + 1} \n")
@@ -30,6 +32,14 @@ class Simulador:
             for persona in self.get_comunidad().ciudadanos:
                 print(f"id_{persona._id} {persona.estado} {persona.nombre_apellido} {persona.familia} {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
             print("\n")
+
+            contador_inmunes = 0
+            for persona in self.get_comunidad().ciudadanos:
+                if persona.inmunidad:
+                    contador_inmunes = contador_inmunes + 1
+
+            adnpo.append(contador_inmunes)
+
 
             for persona in self.get_comunidad().ciudadanos:
                 if persona.estado:
@@ -74,7 +84,8 @@ class Simulador:
 
         #       (Eje X        , Eje Y)
         plt.plot(arreglo_eje_x, adipd)  
-            
+        plt.plot(arreglo_eje_x, adnpo)
+
         #nombres ejes x , y  
         plt.xlabel("x - Dias")   
         plt.ylabel("y - Enfermos")  
