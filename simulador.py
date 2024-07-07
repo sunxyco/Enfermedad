@@ -27,6 +27,7 @@ class Simulador:
         #Almacenamiento De Datos De Sanos
         numero_sanos_iniciales = self.get_comunidad().num_ciudadanos - self.get_comunidad().num_infectados
         ads = [numero_sanos_iniciales]
+        datos_totales = ""
 
         for iteracion in range(pasos):
             print(f"PASO ~~ {iteracion + 1} \n")
@@ -84,7 +85,15 @@ class Simulador:
                 else:
                     print(f"id_{persona._id} {persona.estado} d{persona.dias_enfermo}-{persona.dias_que_va_a_estar_enfermo} f{persona.familia} {persona.nombre_apellido} ~ {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            
+
+            datos_dia = (f"dia {iteracion + 1}; suseptibles x; infectados {presonas_enfermas}; recuperados {personas_sanas};\n")
+            datos_totales += datos_dia
+
+        print(datos_totales)
+
         print(f"enfermos por dia ~ {adipd}")
+
 
         longitud_x = len(adipd)
         arreglo_eje_x = list(range(1, longitud_x + 1))
@@ -95,14 +104,14 @@ class Simulador:
         plt.plot(arreglo_eje_x, ads)
 
         #nombres ejes x , y  
-        plt.xlabel("x - Dias")   
+        plt.xlabel("x - Dias\nazu-enfermos nar-inmunes ver-sanos")   
         plt.ylabel("y - Enfermos")  
             
         #titulo grafico 
         plt.title("Hello World")  
         
         #muestra el grafico            
-        plt.show()  
+        plt.show()
 
 
     def contagiar_conexiones(self, persona_contagiante):

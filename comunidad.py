@@ -84,27 +84,55 @@ class Comunidad:
 
 
     def generar_conexiones_interpersonas(self, promedio_conexion_fisica, arreglo_comunidad):
-        #personas
-        #lista_comunidad = arreglo_comunidad
 
-        #tamaño del subconjunto
-        #promedio de conexiones
-        tamano_subconjunto = conexiones.dist_normal(promedio_conexion_fisica, 1)
+        #voy a tener que hacer esta funcion toda denuevo xddddd
+        #retornara un arreglo con las conexiones ya hechas
 
-        #a cada persona se le va a asignar un arreglo ~referencia a otros objetos de la misma comunidad, van a ser sus amikos~
-        #(me gustaria mostrar las conexiones entre objetos en un grafo)
-        for persona in arreglo_comunidad:
+        #la cantidad de conexiones que tiene una persona ~dist_Normal, con media promedio_conexion_fisica
+        #la cantidad de personas que tendra en persona.conexiones
+        for persona_generar_conexiones in arreglo_comunidad:
+            cantidad_de_conexiones = conexiones.dist_normal(promedio_conexion_fisica, 1)
+            persona_generar_conexiones.conexiones_disponibles = cantidad_de_conexiones
 
-            #se filtra la comunidad para quitarle la persona a la que se le estan haciendo las conexiones y las pesonas de su familia
-            counidad_filtrada = []
-
+        #con esta funcion se generan las conexiones en tre las personas de la misma familia
+        #se le quitara 1a la cantidad de conexiones podibles que puede tener la persona
             for persona_filtrar in arreglo_comunidad:
-                if persona._id != persona_filtrar._id and persona.familia != persona_filtrar.familia:
-                    counidad_filtrada.append(persona_filtrar)
+                if persona_generar_conexiones._id != persona_filtrar._id and persona_generar_conexiones.familia == persona_filtrar.familia:
+                    persona_generar_conexiones.conexiones.append(persona_filtrar)
+                    persona_generar_conexiones.conexiones_disponibles -= 1
 
+        #se hace este ciclo en un ciclo for aparte porque necesitaos que todos los ciudadanos tengan 
+        #definido cuantas conexiones tendran
+        for persona_generar_conexiones in arreglo_comunidad:
+            #se ve si la perona tiene espacios disponibles para generar conexiones
+            if persona_generar_conexiones.conexiones_disponibles != 0:
+                while persona_generar_conexiones.conexiones_disponibles != 0:
+                    #genera una conexion con un objeto random del arreglo que tambien tiene espacios disponibles
 
+                    arreglo_disponible = []
+
+                    #se genera un arreglo con las personas que tienen conexiones disponibles
+                    for persona in arreglo_comunidad:
+                        if persona.conexiones_disponibles != 0 and persona._id != persona_generar_conexiones._id:
+                            arreglo_disponible.append(persona)
+
+                    if len(arreglo_disponible) == 0:
+                        pass
+
+                    #de el arreglo de las personas disponibles se escoge una al azar
+                    persona_aleatoria = np.random.choice(arreglo_disponible)
+
+                    if persona_aleatoria in persona_generar_conexiones.conexiones:
+                        break
+                    else:
+                        persona_aleatoria.conexiones.append(persona_generar_conexiones)
+                        persona_aleatoria.conexiones_disponibles -= 1
+
+                        persona_generar_conexiones.conexiones.append(persona_aleatoria)
+                        persona_generar_conexiones.conexiones_disponibles -= 1
+        """
             #seleccionar subconjntos aleatorio sin reemplazo para conexiones al azar
-            #print(f"~~~~~~ {counidad_filtrada}")
+
             if len(counidad_filtrada) > 0:
                 while tamano_subconjunto > len(counidad_filtrada):
                     tamano_subconjunto -= 1
@@ -112,21 +140,11 @@ class Comunidad:
             else:
                 subconjunto_aleatorio = []
 
-            #print("conjunto de personas aleatorio: ~ ", subconjunto_aleatorio)
             for elemetno in subconjunto_aleatorio:
                 persona.conexiones.append(elemetno)
+                elemetno.conexiones.append(persona)
 
-            #se agrega a la fuerza a las personas que tienen el mismo id de familia
-            for persona_comparar in arreglo_comunidad:
-                if persona.familia == persona_comparar.familia and persona._id != persona_comparar._id:
-                    if persona_comparar not in persona.conexiones:
-                        persona.conexiones.append(persona_comparar)
-
-
-            #print(f"~ conexiones del elemento ~~ {persona.conexiones}")
-
-            """for elemento in subconjunto_aleatorio:
-                print(f"~~~~~~~~ {elemento.nombre_apellido}")"""
+        """
 
         return arreglo_comunidad
 

@@ -36,6 +36,9 @@ class Ciudadano:
         #conexiones que tiene la persona, se puede considerar amikos
         self.conexiones = []
 
+        self.conexiones_disponibles = 0
+        self.conexiones_iniciales = 0
+
     #para enfermar a los infectados inciales de la comunidad
     def enfermarse(self, enfermedad_clase):
         self.estado = True

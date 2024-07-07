@@ -99,3 +99,11 @@ apuntes 25-06-2024
 
 #ejemplo
 probabilidad_ejemplo("hola mundo", 0.5) #imprimira le texto con un 50%
+
+~~~~~~~~~~~~~~~03-07-2024~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+hacer csv -> dia x; siseptibles x; infectados x; recuperados x;
+
+hacer comparacion con la prediccion del modelo sir(?)
+
+al generar conexiones la personas se le agrege la referencia del dentro del amigo
