@@ -105,7 +105,21 @@ class Simulador:
 
         arreglo_datos = [dias, adipd, adnpo, arreglo_suseptibles, ads]
 
+        nombre_archivo = "datos_simulacion.txt"
+
+        # Abrir el archivo en modo escritura
+        with open(nombre_archivo, 'w') as archivo:
+            archivo.write("dias ~ " + str(dias) + "\n")
+            archivo.write("enfermos por dia ~ " + str(adipd) + "\n")
+            archivo.write("recuperados ~ " + str(adnpo) + "\n")
+            archivo.write("suseptibles ~ " + str(arreglo_suseptibles) + "\n")
+            archivo.write("sanos ~ " + str(ads) + "\n")
+
+        print(f"Los datos se han almacenado correctamente en '{nombre_archivo}'.")
+
         """
+        for dato in arreglo_datos:
+        
         #se guarda la data en un txt
         with open("Data.txt", "w") as archivo:
             archivo.write(datos_totales)
