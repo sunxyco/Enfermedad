@@ -24,6 +24,7 @@ class Ciudadano:
         self.inmunidad = False
         self.dias_enfermo = 0
         self.dias_que_va_a_estar_enfermo = None
+        self.suseptible = True
         """
         ~idea
         self.dias_enfermo = 0
@@ -42,6 +43,7 @@ class Ciudadano:
     #para enfermar a los infectados inciales de la comunidad
     def enfermarse(self, enfermedad_clase):
         self.estado = True
+        self.suseptible = False
         self.enfermedad = enfermedad_clase
         print(f"~~~ enfermedad ser como ~~ E.C-{enfermedad_clase.infeccion_probable_aleatorio} -- E.F-{enfermedad_clase.infeccion_probable_familiar}")
 		#eliminar la realcion cuando se recupere

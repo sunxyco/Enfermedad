@@ -7,8 +7,7 @@ covid = Enfermedad(infeccion_probable_aleatorio=0.2,
                     infeccion_probable_familiar=0.7,
                     #dias que la enfermedad va a existir antes que se cure
                     promedio_pasos=5,
-                    nombre="Covis",
-                    mortalidad=0.1)
+                    nombre="Covis")
 
 talca = Comunidad(num_ciudadanos=800,
                     #promedios de numero de contactos - puede que haya un numero x de contactos
@@ -19,6 +18,7 @@ talca = Comunidad(num_ciudadanos=800,
                     num_infectados=1,
                     probabilidad_conexion_fisica=0.7,
                     nombre = "Talca")
+
 
 sim = Simulador()
 sim.set_comunidad(talca)

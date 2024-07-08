@@ -2,10 +2,12 @@ from comunidad import Comunidad
 import conexiones
 import random
 import matplotlib.pyplot as plt
+import pandas as pd
 
 class Simulador:
     def __init__(self):
         self.__comunidad = None
+        self.datos_final_simulacion = []
 
     def set_comunidad(self, comunidad):
         self.__comunidad = comunidad
@@ -20,30 +22,49 @@ class Simulador:
 
         print("SIMULADOR ~~~~ ", self.get_comunidad().nombre)
 
-        #Almacenamiento De Datos De Infectados Por Dia
         adipd = [self.get_comunidad().num_infectados]
-        #Almacenamiento De Datos De Inmunes Por Dia
+        #Almacenamenito De Datos De Inmunes Por Dia
         adnpo = [0]
-        #Almacenamiento De Datos De Sanos
+
         numero_sanos_iniciales = self.get_comunidad().num_ciudadanos - self.get_comunidad().num_infectados
+        #Almacenamiento Datos Sanos
         ads = [numero_sanos_iniciales]
+
+        arreglo_suseptibles = [numero_sanos_iniciales]
         datos_totales = ""
+
+        dias = [0]
 
         for iteracion in range(pasos):
             print(f"PASO ~~ {iteracion + 1} \n")
-
-            #se muestran las personas la inicio del dia
-            for persona in self.get_comunidad().ciudadanos:
-                print(f"id_{persona._id} {persona.estado} {persona.nombre_apellido} {persona.familia} {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
-            print("\n")
+            dias.append(iteracion + 1)
 
             contador_inmunes = 0
+            c_suseptibles = 0
+            #se cuentan las personas enfermas al final del dia
+            presonas_enfermas = 0
+            personas_sanas = 0
+
+            for persona_shi in self.get_comunidad().ciudadanos:
+                if persona_shi.estado:
+                    presonas_enfermas = presonas_enfermas + 1
+                else:
+                    personas_sanas = personas_sanas + 1
+            adipd.append(presonas_enfermas)
+            ads.append(personas_sanas)            
+
             for persona in self.get_comunidad().ciudadanos:
                 if persona.inmunidad:
                     contador_inmunes = contador_inmunes + 1
+                if persona.suseptible:
+                    c_suseptibles += 1
+
 
             adnpo.append(contador_inmunes)
+            arreglo_suseptibles.append(c_suseptibles)
 
+            datos_dia = (f"dia {iteracion + 1}; suseptibles {c_suseptibles}; infectados {presonas_enfermas}; personas sanas {personas_sanas}; recuperados {contador_inmunes}\n")
+            datos_totales += datos_dia
 
             for persona in self.get_comunidad().ciudadanos:
                 if persona.estado:
@@ -66,52 +87,36 @@ class Simulador:
             for persona_posible_de_contagio in arreglo_personas_contagianes:
                 self.contagiar_conexiones(persona_posible_de_contagio)
 
-            #se cuentan las personas enfermas al final del dia
-            presonas_enfermas = 0
-            personas_sanas = 0
-            for persona_shi in self.get_comunidad().ciudadanos:
-                if persona_shi.estado:
-                    presonas_enfermas = presonas_enfermas + 1
-                else:
-                    personas_sanas = personas_sanas + 1
-            print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nSe Terminó el dia ~ personas enfermas: {presonas_enfermas} \n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            adipd.append(presonas_enfermas)
-            ads.append(personas_sanas)
 
-            print("\n\nDATOS FINAL DEL DIA\n")
-            for persona in self.get_comunidad().ciudadanos:
-                if persona.dias_que_va_a_estar_enfermo == None:
-                    print(f"id_{persona._id} {persona.estado} d{persona.dias_enfermo}-* f{persona.familia} {persona.nombre_apellido} ~ {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
-                else:
-                    print(f"id_{persona._id} {persona.estado} d{persona.dias_enfermo}-{persona.dias_que_va_a_estar_enfermo} f{persona.familia} {persona.nombre_apellido} ~ {conexiones.mostrar_mostrar_coneciones(self, persona.conexiones)}")
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            
-
-            datos_dia = (f"dia {iteracion + 1}; suseptibles x; infectados {presonas_enfermas}; recuperados {personas_sanas};\n")
-            datos_totales += datos_dia
 
         print(datos_totales)
 
+        print(f"dias ~ {dias}")
         print(f"enfermos por dia ~ {adipd}")
+        print(f"recuperados {adnpo}")
+        print(f"suseptibles ~ {arreglo_suseptibles}")
+        print(f"sanos ~ {ads}")
 
+        print(len(dias))
+        print(len(adipd))
+        print(len(adnpo))
+        print(len(arreglo_suseptibles))
+        print(len(ads))
 
-        longitud_x = len(adipd)
-        arreglo_eje_x = list(range(1, longitud_x + 1))
+        arreglo_datos = [dias, adipd, adnpo, arreglo_suseptibles, ads]
 
-        #       (Eje X        , Eje Y)
-        plt.plot(arreglo_eje_x, adipd)  
-        plt.plot(arreglo_eje_x, adnpo)
-        plt.plot(arreglo_eje_x, ads)
-
-        #nombres ejes x , y  
-        plt.xlabel("x - Dias\nazu-enfermos nar-inmunes ver-sanos")   
-        plt.ylabel("y - Enfermos")  
-            
-        #titulo grafico 
-        plt.title("Hello World")  
+        """
+        #se guarda la data en un txt
+        with open("Data.txt", "w") as archivo:
+            archivo.write(datos_totales)
         
-        #muestra el grafico            
-        plt.show()
+
+        """
+        # Convertir los datos totales a un DataFrame de Pandas
+        df = pd.DataFrame([x.split('; ') for x in datos_totales.split('\n')], columns=['Dia', 'Suseptibles', 'Infectados', 'Personas Sanas', 'Recuperados'])
+        
+        # Guardar el DataFrame como archivo CSV
+        df.to_csv('Data.csv', index=False)
 
 
     def contagiar_conexiones(self, persona_contagiante):
@@ -154,3 +159,4 @@ class Simulador:
                             print("No es a enfermado")
             else:
                 print("No hubo contacto entre las dos personas")
+    

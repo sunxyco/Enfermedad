@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 def mostrar_mostrar_coneciones(self, personas):
 	nombres_conexiones = []
@@ -42,3 +43,28 @@ def probabilidad(persona_contagiante, persona_suseptible):
 		else:
 			print("~ no estrecho")
 			return False
+
+def graficar():
+	# Leer el archivo CSV en un DataFrame
+	df = pd.read_csv('Data.csv')
+
+	# Mostrar el DataFrame
+	print("DataFrame:")
+	print(df)
+
+	# Guardar los datos en arreglos separados
+	dias = df['Dia'].tolist()
+	suseptibles = df['Suseptibles'].tolist()
+	infectados = df['Infectados'].tolist()
+	personas_sanas = df['Personas Sanas'].tolist()
+	recuperados = df['Recuperados'].tolist()
+
+	# Mostrar los arreglos
+	print("\nArreglos separados:")
+	print("Dias:", dias)
+	print("Suseptibles:", suseptibles)
+	print("Infectados:", infectados)
+	print("Personas Sanas:", personas_sanas)
+	print("Recuperados:", recuperados)
+
+	datos_extraidos = [dias, suseptibles, infectados, personas_sanas, recuperados]
