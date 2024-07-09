@@ -155,6 +155,13 @@ class MainWindow(Gtk.ApplicationWindow):
         sim.set_comunidad(talca)
         sim.run(int(self.entry1_simulador.get_text()))
 
+        #hace todo el algoritmo para hacer la simulaicon y guardar los datos en un .txt
+        #y despues cierra toda la aplicacion porque en mi caso
+        #tuve una incompatibilidad entre gtk y mathplotlib
+        #entonces cuando se ejecuta la simulacion se guardan los datos, se cierra la aplicacion
+        #y se leen los datos para ponerlos en un grafico
+        self.destroy()
+
 class MyApp(Gtk.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
