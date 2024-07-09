@@ -3,6 +3,8 @@ import conexiones
 import random
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
+
 
 class Simulador:
     def __init__(self):
@@ -16,54 +18,44 @@ class Simulador:
         return self.__comunidad
 
     def run(self, pasos):
-        #correr la simulacion
-        #print("de momento pinta bien")
-        print(f"simlador tendra {pasos} pasos")
-
+        print(f"Simulador tendrá {pasos} pasos")
         print("SIMULADOR ~~~~ ", self.get_comunidad().nombre)
 
-        adipd = [self.get_comunidad().num_infectados]
-        #Almacenamenito De Datos De Inmunes Por Dia
-        adnpo = [0]
-
+        adipd = np.array([self.get_comunidad().num_infectados])
+        adnpo = np.array([0])
         numero_sanos_iniciales = self.get_comunidad().num_ciudadanos - self.get_comunidad().num_infectados
-        #Almacenamiento Datos Sanos
-        ads = [numero_sanos_iniciales]
-
-        arreglo_suseptibles = [numero_sanos_iniciales]
+        ads = np.array([numero_sanos_iniciales])
+        arreglo_suseptibles = np.array([numero_sanos_iniciales])
+        dias = np.array([0])
         datos_totales = ""
-
-        dias = [0]
 
         for iteracion in range(pasos):
             print(f"PASO ~~ {iteracion + 1} \n")
-            dias.append(iteracion + 1)
+            dias = np.append(dias, iteracion + 1)
 
             contador_inmunes = 0
             c_suseptibles = 0
-            #se cuentan las personas enfermas al final del dia
             presonas_enfermas = 0
             personas_sanas = 0
 
             for persona_shi in self.get_comunidad().ciudadanos:
                 if persona_shi.estado:
-                    presonas_enfermas = presonas_enfermas + 1
+                    presonas_enfermas += 1
                 else:
-                    personas_sanas = personas_sanas + 1
-            adipd.append(presonas_enfermas)
-            ads.append(personas_sanas)            
+                    personas_sanas += 1
+            adipd = np.append(adipd, presonas_enfermas)
+            ads = np.append(ads, personas_sanas)
 
             for persona in self.get_comunidad().ciudadanos:
                 if persona.inmunidad:
-                    contador_inmunes = contador_inmunes + 1
+                    contador_inmunes += 1
                 if persona.suseptible:
                     c_suseptibles += 1
 
+            adnpo = np.append(adnpo, contador_inmunes)
+            arreglo_suseptibles = np.append(arreglo_suseptibles, c_suseptibles)
 
-            adnpo.append(contador_inmunes)
-            arreglo_suseptibles.append(c_suseptibles)
-
-            datos_dia = (f"dia {iteracion + 1}; suseptibles {c_suseptibles}; infectados {presonas_enfermas}; personas sanas {personas_sanas}; recuperados {contador_inmunes}\n")
+            datos_dia = f"dia {iteracion + 1}; suseptibles {c_suseptibles}; infectados {presonas_enfermas}; personas sanas {personas_sanas}; recuperados {contador_inmunes}\n"
             datos_totales += datos_dia
 
             for persona in self.get_comunidad().ciudadanos:
@@ -72,65 +64,26 @@ class Simulador:
                         persona.recuperarse()
                         print(f"Se ha curado y ha desarrollado inmunidad. {persona.nombre_apellido}")
 
-            #ciclo para enfermar a la gente
-            #se recorre a todos los ciudadanos hasta que se encuentre a alguien que tiene la enfermedad
             arreglo_personas_contagianes = []
             for test in self.get_comunidad().ciudadanos:
-                #si tiene la enfermada empieza el proceso aleatorio de enfermar a la demas gente
                 if test.estado:
-                    #arreglo de personas que pueden contagiar al resto
                     arreglo_personas_contagianes.append(test)
-                    #print("~~~~~~~~~~~~~~~~funcion de contagiar xd")
 
-            #una ves extraidos las pesronas que tienen la enfermedad es hace la funcnion para que contagien
-            #de momento todas las conexiones que tiene la persona se va conttagiar
             for persona_posible_de_contagio in arreglo_personas_contagianes:
                 self.contagiar_conexiones(persona_posible_de_contagio)
 
-
-
+        #datos totales se termina imprimieno nomas y no se usa para nada
         print(datos_totales)
 
-        print(f"dias ~ {dias}")
-        print(f"enfermos por dia ~ {adipd}")
-        print(f"recuperados {adnpo}")
-        print(f"suseptibles ~ {arreglo_suseptibles}")
-        print(f"sanos ~ {ads}")
+        arreglo_datos = np.array([dias, adipd, adnpo, arreglo_suseptibles, ads])
 
-        print(len(dias))
-        print(len(adipd))
-        print(len(adnpo))
-        print(len(arreglo_suseptibles))
-        print(len(ads))
+        #se convierte a DataFrame de Pandas
+        df = pd.DataFrame(arreglo_datos.T, columns=['dias', 'enfermos por dia', 'recuperados', 'suseptibles', 'sanos'])
 
-        arreglo_datos = [dias, adipd, adnpo, arreglo_suseptibles, ads]
+        #guardar como CSV
+        df.to_csv('datos_simulacion.csv', index=False)
 
-        nombre_archivo = "datos_simulacion.txt"
-
-        # Abrir el archivo en modo escritura
-        with open(nombre_archivo, 'w') as archivo:
-            archivo.write("dias ~ " + str(dias) + "\n")
-            archivo.write("enfermos por dia ~ " + str(adipd) + "\n")
-            archivo.write("recuperados ~ " + str(adnpo) + "\n")
-            archivo.write("suseptibles ~ " + str(arreglo_suseptibles) + "\n")
-            archivo.write("sanos ~ " + str(ads) + "\n")
-
-        print(f"Los datos se han almacenado correctamente en '{nombre_archivo}'.")
-
-        """
-        for dato in arreglo_datos:
-        
-        #se guarda la data en un txt
-        with open("Data.txt", "w") as archivo:
-            archivo.write(datos_totales)
-        
-
-        """
-        # Convertir los datos totales a un DataFrame de Pandas
-        df = pd.DataFrame([x.split('; ') for x in datos_totales.split('\n')], columns=['Dia', 'Suseptibles', 'Infectados', 'Personas Sanas', 'Recuperados'])
-        
-        # Guardar el DataFrame como archivo CSV
-        df.to_csv('Data.csv', index=False)
+        print(f"Los datos se han almacenado correctamente en 'datos_simulacion.csv'.")
 
 
     def contagiar_conexiones(self, persona_contagiante):

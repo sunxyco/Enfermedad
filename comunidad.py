@@ -130,21 +130,6 @@ class Comunidad:
 
                         persona_generar_conexiones.conexiones.append(persona_aleatoria)
                         persona_generar_conexiones.conexiones_disponibles -= 1
-        """
-            #seleccionar subconjntos aleatorio sin reemplazo para conexiones al azar
-
-            if len(counidad_filtrada) > 0:
-                while tamano_subconjunto > len(counidad_filtrada):
-                    tamano_subconjunto -= 1
-                subconjunto_aleatorio = np.random.choice(counidad_filtrada, size=tamano_subconjunto, replace=False)
-            else:
-                subconjunto_aleatorio = []
-
-            for elemetno in subconjunto_aleatorio:
-                persona.conexiones.append(elemetno)
-                elemetno.conexiones.append(persona)
-
-        """
 
         return arreglo_comunidad
 
