@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import os
 
 # Abre un archivo en modo lectura ('r' indica lectura, que es el modo por defecto)
 # Abre el archivo en modo lectura
@@ -51,5 +52,11 @@ def generar_graficar():
 
     # Mostrar el gráfico
     plt.grid(True)  # Activar la cuadrícula
-    plt.tight_layout()  # Ajustar el diseño
+    
+    directorio = "./plots"
+
+    # Crea el directorio si no existe
+    os.makedirs(directorio, exist_ok=True)
+
+    plt.savefig('./plots/plot.png')
     plt.show()

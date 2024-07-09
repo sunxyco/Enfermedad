@@ -19,42 +19,58 @@ class MainWindow(Gtk.ApplicationWindow):
         super().__init__(*args, **kwargs)
 
         # Box principal
-        self.main_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
+        self.main_box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
         self.set_child(self.main_box)
 
         # Menu
         header_bar = Gtk.HeaderBar.new()
         self.set_titlebar(titlebar=header_bar)
         self.set_title("Simulador Enfemredad")
-        box_izquierda = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
+        box_izquierda = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
 
         box_enfermedad = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
         box_comunidad = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
         box_simulador = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
 
-        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        label_enfermedad = Gtk.Label()
-        label_enfermedad.set_text("Parametros Enfermedad")
+        label_informacion = Gtk.Label()
+        label_informacion.set_text("~ ⚠Informacion Ingreso de Datos⚠ ~\nProb -> (0.0 - 1.0) / Prom -> Int(1,2,3,...)\n")
+        self.main_box.append(label_informacion)
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        label_enfermedad1 = Gtk.Label()
+        label_enfermedad1.set_text("~~Parametros Enfermedad~~")
+
+        label_enfermedad2 = Gtk.Label()
+        label_enfermedad2.set_text("Prob. Infeccion - aleatorio")
         self.entry1_enfermedad = Gtk.Entry()
+        label_enfermedad3 = Gtk.Label()
+        label_enfermedad3.set_text("Prob. Infeccion - Familiar")
         self.entry2_enfermedad = Gtk.Entry()
+        label_enfermedad4 = Gtk.Label()
+        label_enfermedad4.set_text("Prom. Pasos")
         self.entry3_enfermedad = Gtk.Entry()
+        label_enfermedad5 = Gtk.Label()
+        label_enfermedad5.set_text("Nombre")
         self.entry4_enfermedad = Gtk.Entry()
 
-        self.entry1_enfermedad.set_placeholder_text("Prob. Infeccion - aleatorio")
-        self.entry2_enfermedad.set_placeholder_text("Prob. Infeccion - Familiar")
-        self.entry3_enfermedad.set_placeholder_text("Prom. Pasos")
-        self.entry4_enfermedad.set_placeholder_text("Nombre")
+        self.entry1_enfermedad.set_placeholder_text("~ def_0.1")
+        self.entry2_enfermedad.set_placeholder_text("~ def_0.4")
+        self.entry3_enfermedad.set_placeholder_text("~ def_6")
+        self.entry4_enfermedad.set_placeholder_text("Covidd")
 
-        box_enfermedad.append(label_enfermedad)
+        box_enfermedad.append(label_enfermedad1)
+        box_enfermedad.append(label_enfermedad5)
         box_enfermedad.append(self.entry4_enfermedad)
+        box_enfermedad.append(label_enfermedad2)
         box_enfermedad.append(self.entry1_enfermedad)
+        box_enfermedad.append(label_enfermedad3)
         box_enfermedad.append(self.entry2_enfermedad)
+        box_enfermedad.append(label_enfermedad4)
         box_enfermedad.append(self.entry3_enfermedad)
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         label_comunidad = Gtk.Label()
-        label_comunidad.set_text("Parametros comunidad")
+        label_comunidad.set_text("~~Parametros comunidad~~")
 
         self.entry1_comunidad = Gtk.Entry()
         self.entry2_comunidad = Gtk.Entry()
@@ -62,25 +78,44 @@ class MainWindow(Gtk.ApplicationWindow):
         self.entry4_comunidad = Gtk.Entry()
         self.entry5_comunidad = Gtk.Entry()
 
-        self.entry1_comunidad.set_placeholder_text("N° Ciudadanos")
-        self.entry5_comunidad.set_placeholder_text("Nombre")
-        self.entry2_comunidad.set_placeholder_text("Prom. Conexion fisica")
-        self.entry3_comunidad.set_placeholder_text("N° Infectados iniciales")
-        self.entry4_comunidad.set_placeholder_text("Prob Conexion fisica")
+        label_comunidad1 = Gtk.Label()
+        label_comunidad1.set_text("N° Ciudadanos")
+        label_comunidad2 = Gtk.Label()
+        label_comunidad2.set_text("Nombre")
+        label_comunidad3 = Gtk.Label()
+        label_comunidad3.set_text("Prom. Conexion fisica")
+        label_comunidad5 = Gtk.Label()
+        label_comunidad5.set_text("N° Infectaods iniciales")
+        label_comunidad4 = Gtk.Label()
+        label_comunidad4.set_text("Prob. Conexion Fisica")
+
+
+        self.entry1_comunidad.set_placeholder_text("Def_800")
+        self.entry5_comunidad.set_placeholder_text("Talca")
+        self.entry2_comunidad.set_placeholder_text("Def_6")
+        self.entry3_comunidad.set_placeholder_text("Def_1")
+        self.entry4_comunidad.set_placeholder_text("Def_0.6")
 
         box_comunidad.append(label_comunidad)
+        box_comunidad.append(label_comunidad2)
         box_comunidad.append(self.entry5_comunidad)
+        box_comunidad.append(label_comunidad1)
         box_comunidad.append(self.entry1_comunidad)
+        box_comunidad.append(label_comunidad3)
         box_comunidad.append(self.entry2_comunidad)
+        box_comunidad.append(label_comunidad5)
         box_comunidad.append(self.entry3_comunidad)
+        box_comunidad.append(label_comunidad4)
         box_comunidad.append(self.entry4_comunidad)
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         label_simulador = Gtk.Label()
-        label_simulador.set_text("Parametros simulador")
+        label_simulador.set_text("~~Parametros simulador~~")
 
         self.entry1_simulador = Gtk.Entry()
+        label_enfermedad4 = Gtk.Label()
+        label_enfermedad4.set_text("N° Pasos")
 
-        self.entry1_simulador.set_placeholder_text("N° Pasos")
+        self.entry1_simulador.set_placeholder_text("Dias a simular def_60")
 
         box_simulador.append(label_simulador)
         box_simulador.append(self.entry1_simulador)
@@ -93,10 +128,10 @@ class MainWindow(Gtk.ApplicationWindow):
 
         boton = Gtk.Button()
         boton.set_label("Simular")
-        box_izquierda.append(boton)
         boton.connect("clicked", self.clic_simular)
 
         self.main_box.append(box_izquierda)
+        self.main_box.append(boton)
 
 
     def clic_simular(self, widget):
@@ -109,7 +144,7 @@ class MainWindow(Gtk.ApplicationWindow):
         try:
             infeccion_probable_familiar = float(self.entry2_enfermedad.get_text())
         except ValueError:
-            infeccion_probable_familiar = 0.6
+            infeccion_probable_familiar = 0.4
             # Manejar el error aquí
        
         try:
@@ -132,12 +167,12 @@ class MainWindow(Gtk.ApplicationWindow):
         try:
             promedio_conexion_fisica = int(self.entry2_comunidad.get_text())
         except ValueError:
-            promedio_conexion_fisica = 11
+            promedio_conexion_fisica = 6
         
         try:
             num_infectados = int(self.entry3_comunidad.get_text())
         except ValueError:
-            num_infectados = 2
+            num_infectados = 1
         
         try:
             probabilidad_conexion_fisica = float(self.entry4_comunidad.get_text())
@@ -153,7 +188,13 @@ class MainWindow(Gtk.ApplicationWindow):
 
         sim = Simulador()
         sim.set_comunidad(talca)
-        sim.run(int(self.entry1_simulador.get_text()))
+
+        try:
+            dias_simular = int(self.entry4_comunidad.get_text())
+        except ValueError:
+            dias_simular = 60
+
+        sim.run(dias_simular)
 
         #hace todo el algoritmo para hacer la simulaicon y guardar los datos en un .txt
         #y despues cierra toda la aplicacion porque en mi caso
