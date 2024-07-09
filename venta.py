@@ -190,7 +190,7 @@ class MainWindow(Gtk.ApplicationWindow):
         sim.set_comunidad(talca)
 
         try:
-            dias_simular = int(self.entry4_comunidad.get_text())
+            dias_simular = int(self.entry1_simulador.get_text())
         except ValueError:
             dias_simular = 60
 
